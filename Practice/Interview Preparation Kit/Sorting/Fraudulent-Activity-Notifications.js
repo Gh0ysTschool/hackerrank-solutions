@@ -26,8 +26,25 @@ function readLine() {
 
 // Complete the activityNotifications function below.
 function activityNotifications(expenditure, d) {
+  let countingSort = (a,range) => {
+    let l = Array(range+1).fill(0)
+    let ans = []
+    for ( let v of a ){
+      l[v]++
+    }
+    for ( let i = 1; i < l.length; i++ ) {
+      l[i] += l[i-1]
+    }
+    let indx
+    for( let i = a.length-1; i >= 0; i-- ){
+      l[a[i]]--
+      indx = l[a[i]]
+      ans[indx] = a[i]
+    }
+    return ans
+  }
   let median = (a) => {
-    let arr = a.sort((a,b) => (a>b) ? 1 : (a<b) ? -1 : 0)
+    let arr = countingSort(a,200)//a.sort((a,b) => (a>b) ? 1 : (a<b) ? -1 : 0)
     let l = Math.floor(arr.length/2)
     return (arr.length%2) ? arr[l] : (arr[l-1] + arr[l])/2
   }
