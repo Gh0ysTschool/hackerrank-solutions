@@ -31,8 +31,7 @@ function isValid(s) {
   Object.keys(h).map( k => hi[h[k]] = (hi[h[k]]||0)+1 )
   let hii = Object.values(hi)
   let hik = Object.keys(hi)
-  return (hii.length > 2) ? 'NO' : (hii.length == 1) ? 'YES' : (Math.abs(hik[0] - hik[1]) && ( hii[0] == 1 || hii[1] == 1) ) ? 'YES' : 'NO'
-
+  return (hii.length > 2) ? 'NO' : (hii.length == 1) ? 'YES' : ( ((hik[0] == 1 || hik[0] - hik[1] == 1) &&  hii[0] == 1) || ( (hik[1] == 1 || hik[1] - hik[0] == 1) && hii[1] == 1) ) ? 'YES' : 'NO'
 }
 
 function main() {
