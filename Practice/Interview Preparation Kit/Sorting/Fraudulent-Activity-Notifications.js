@@ -43,17 +43,16 @@ function activityNotifications(expenditure, d) {
     }
     return ans
   }
-  let median = (a) => {
-    let arr = countingSort(a,200)//a.sort((a,b) => (a>b) ? 1 : (a<b) ? -1 : 0)
-    let l = Math.floor(arr.length/2)
-    return (arr.length%2) ? arr[l] : (arr[l-1] + arr[l])/2
+  let tmp = expenditure.slice(0,d)
+  let ex = expenditure.slice(d)
+  let notices = 0, l, med
+  for ( let i in ex){
+    tmp = countingSort(tmp,200)
+    l = Math.floor(d/2)
+    med = (d%2) ? tmp[l] : (tmp[l-1] + tmp[l])/2
+    notices += ex[i] >= 2*med
+    tmp[tmp.indexOf(expenditure[i])] = ex[i]
   }
-  let notices = 0
-  expenditure.map( (e,i) => {
-    if (i >= d)
-      if ( e >= 2*median(expenditure.slice(i-d,i)))
-        notices++
-  })
   return notices
 }
 
