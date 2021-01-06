@@ -26,26 +26,18 @@ function readLine() {
 
 // Complete the commonChild function below.
 function commonChild(s1, s2) {
-  let hs1tmp = {}, hs2 = {}
-  s1.split('').map( (c,i) => { hs1tmp[c] = hs1tmp[c]||[]; hs1tmp[c].push(i); } )
-  s2.split('').map( (c,i) => { if(!hs1tmp[c]) return; hs2[c] = hs2[c]||[]; hs2[c].push(i); } )
-  let hs1 = {}
-  Object.keys(hs1tmp).filter( c => hs2[c] ).map( c => hs1[c] = hs1tmp[c] )
+    let n = s1.length, m = s2.length
+    let lcs = Array(n+1).fill(0).map( l => Array(m+1).fill(0) )
+    for ( let i in lcs[0] )
+        for ( let j in lcs )
+            if (i==0 || j==0)
+              lcs[i][j] = 0
+            else if (s1[i-1] == s2[j-1])
+                lcs[i][j] = lcs[i-1][j-1] + 1
+            else
+                lcs[i][j] = Math.max(lcs[i][j-1],lcs[i-1][j])
 
-let trail = (key, prevhs1index, prevhs2index, depth) => {
-  for (let key1 in hs1)
-    for (let index1 in hs1[key1])
-      if (hs1[key1][index1] > prevhs1index)
-        for (let index2 in hs2[key1])
-          if (hs2[key1][index2] > prevhs2index){
-            trail(key1,hs1[key1][index1],hs2[key1][index2],depth+1)
-            deepestdepth = Math.max(deepestdepth,depth+1)
-          }
-}
-
-  let deepestdepth = 0
-  trail('',-1,-1,0)
-  return deepestdepth  
+    return lcs[n][m]
 
 }
 
