@@ -27,23 +27,27 @@ function readLine() {
 // Complete the activityNotifications function below.
 function activityNotifications(expenditure, d) {
   let count = Array(201).fill(0)
-  let tmp = expenditure.slice(0,d)
-  tmp.map( l => count[l]++ )
+  expenditure.slice(0,d).map( l => count[l]++)
   let ex = expenditure.slice(d)
-  let notices = 0, l, med
-  for ( let i in ex){
-    let jj = 0
+  let notices = 0, mid = Math.floor(d/2), med, jj, num1, num2
+  let sort = () => {
+    jj = 0
     for ( let j in count ) {
-      if ( jj > tmp.length/2 ) break
-      if ( count[j] ) 
-        for ( let k = 0; k < count[j]; k++ ){
-          tmp[jj] = j
-          jj++
+      if ( !count[j] ) continue
+      for ( let k = 0; k < count[j]; k++ ){
+        jj++
+        if ( jj == mid ) num1 = Number(j)
+        if ( jj > mid ) {
+          num2 = Number(j)
+          return
         }
+      }
     }
-    l = Math.floor(d/2)
-    med = (d%2) ? tmp[l] : (tmp[l-1] + tmp[l])/2
-    notices += ex[i] >= 2*med
+  }
+  for ( let i in ex){
+    sort()
+    med = (1 + (d%2)) * num2 + (1-(d%2)) * num1
+    notices += ex[i] >= med
     count[expenditure[i]]--
     count[ex[i]]++
   }
