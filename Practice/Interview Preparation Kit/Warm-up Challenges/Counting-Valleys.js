@@ -32,8 +32,15 @@ function readLine() {
  */
 
 function countingValleys(steps, path) {
-    // Write your code here
-
+    let level = 0
+    let valleys = 0
+    path.toUpperCase().split('').map( s => {
+        let temp = 0+level
+        level -= (s == 'D')
+        level += (s == 'U')
+        valleys += (level > temp && !level)
+    })
+    return valleys
 }
 
 function main() {
