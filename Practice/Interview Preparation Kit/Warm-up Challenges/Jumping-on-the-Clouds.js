@@ -25,9 +25,17 @@ function readLine() {
 }
 
 // Complete the jumpingOnClouds function below.
+
 function jumpingOnClouds(c) {
-
-
+    let jumps = 0
+    let i = 0
+    while(1){
+        if (c[i+2] == 1 || c[i+2] === undefined){
+            if (c[i+1] === undefined) {
+                return jumps 
+            } else { i += 1; jumps += 1 }
+        } else { i += 2; jumps += 1 }
+    }
 }
 
 function main() {
