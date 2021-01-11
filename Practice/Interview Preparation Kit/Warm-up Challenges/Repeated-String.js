@@ -25,9 +25,12 @@ function readLine() {
 }
 
 // Complete the repeatedString function below.
+
 function repeatedString(s, n) {
-
-
+  return s.slice(0, n%s.length ).split('')
+    .filter( s => s == 'a' ).length 
+    + ( (n - n%s.length) / s.length ) 
+    * s.split('').filter( s => s == 'a' ).length 
 }
 
 function main() {
