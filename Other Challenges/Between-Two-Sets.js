@@ -31,23 +31,21 @@ function readLine() {
  *  2. INTEGER_ARRAY b
  */
 
-function getTotalX(a, b) {
-    a = a.sort( (a,b) => (a>b) ? 1 : (a==b) ? 0 : -1).reverse()
-    b = b.sort( (a,b) => (a>b) ? 1 : (a==b) ? 0 : -1)
-    let start = a.reduce( (acc,cur) => (acc%cur) ? acc*cur : acc,a[0])
-    let end = b[0]
-    let check = [start]
-    while( start+check[check.length-1] <= end )
-      check.push(start+check[check.length-1])
-    b.map( v => {
-      let filters = []
-      check.map( (vv,i) =>{
-        if ( v%vv ) filters.push(i)
-      })
-      check = check.filter ( (vvv,j) => !filters.includes(j) )
-    } )
-    return check.length
 
+function getTotalX(a, b) {
+    a = a.sort( (a,b) => (a>b) ? 1 : (a==b) ? 0 : -1)
+    b = b.sort( (a,b) => (a>b) ? 1 : (a==b) ? 0 : -1)
+    let start = a[a.length-1]
+    let end = b[0]
+    let uptick = false
+    let ret = 0
+    for ( let k = start; k <= end; k+=start ){
+      uptick = true
+      b.map( v => uptick = !(v%k) && uptick )
+      a.map( v => uptick = !(k%v) && uptick )
+      ret += !!uptick
+    }
+    return ret
 }
 
 function main() {
